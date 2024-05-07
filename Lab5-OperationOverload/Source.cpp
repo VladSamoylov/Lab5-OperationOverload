@@ -157,6 +157,9 @@ RealNumber RealNumber::operator-(const RealNumber& rn) {
 		RealNumber tmp(rn);
 		for (int i = 0; i < this->n; i++) {
 			tmp.mas[i] = this->mas[i] - tmp.mas[i];
+			}
+		for (int j = this->n; j < rn.n; j++) {
+			tmp.mas[j] = 0 - tmp.mas[j];
 		}
 		return tmp;
 	}
@@ -257,9 +260,16 @@ void CheckData(int& x) {
 		if (cin.fail()) {
 			cin.clear();
 			cin.ignore(666, '\n');
-			cerr << "You enter wrong data! Please enter correct data: \n";
-			cout << "Enter lenght of bit vector: ";
-			cin >> x;
+			if (x > 2147483647 || x < -2147483648) {
+				cerr << "Out of range of values (-2147483648 to 2147483647)! Nearest value is set! " << endl;
+				if (x > 2147483647) x = 2147483647;
+				else if (x < -2147483648) x = -2147483648;
+				break;
+			}	
+			else {
+				cerr << "You enter wrong data! Please enter correct int data: \n";
+				cin >> x;
+			}			
 			cin.ignore(666, '\n');
 		}
 		else break;
@@ -282,7 +292,7 @@ int main() {
 		cout << setw(20) << left << "rn3<<: "; rn3 << 1; rn3.Show();
 		cout << setw(20) << left << "rn3>>: "; rn3 >> 1; rn3.Show(); cout << endl;
 		cout << setw(20) << left << "Scalar product (rn1 * rn2): " << rn1 * rn2 << endl;
-		cout << setw(20) << left << "Get 4 element of rn3: " << rn3[4] << endl;
+		cout << setw(20) << left << "Get 4 element of rn3[4]: " << rn3[4] << endl;
 
 		if (work != 0) {
 			cout << "\nRetry? 1 - yes / 0 - no" << endl;
